@@ -89,6 +89,8 @@ macro(OptimizeTheiaCompilerFlags)
 
   # Set the default Theia flags to an empty string.
   set (THEIA_CXX_FLAGS)
+  EXECUTE_PROCESS (COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                 OUTPUT_VARIABLE GCC_VERSION)
 
   if (CMAKE_BUILD_TYPE STREQUAL "Release")
     if (CMAKE_COMPILER_IS_GNUCXX)
