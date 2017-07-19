@@ -52,6 +52,7 @@ inline void HashCombine(const T& v, std::size_t* seed) {
 
 }  // namespace
 
+#ifndef THEIA_DONT_DEFINE_PAIR_HASH
 // STL does not implement hashing for pairs, so a simple pair hash is done here.
 template <typename T1, typename T2> struct hash<std::pair<T1, T2> > {
  public:
@@ -62,6 +63,7 @@ template <typename T1, typename T2> struct hash<std::pair<T1, T2> > {
     return seed;
   }
 };
+#endif
 
 // A generic hash function that hashes constant size Eigen matrices and vectors.
 template <typename T, int N, int M>
