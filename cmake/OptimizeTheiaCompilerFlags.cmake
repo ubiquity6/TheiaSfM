@@ -102,7 +102,7 @@ macro(OptimizeTheiaCompilerFlags)
       endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
       # Mac OS X
       if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-        set (THEIA_CXX_FLAGS "${THEIA_CXX_FLAGS} -msse3")
+        set (THEIA_CXX_FLAGS "${THEIA_CXX_FLAGS} -march=native -mtune=native")
         # Use of -fast only applicable for Apple's GCC
         # Assume this is being used if GCC version < 4.3 on OSX
         execute_process(COMMAND ${CMAKE_C_COMPILER}
@@ -139,7 +139,7 @@ macro(OptimizeTheiaCompilerFlags)
 	# Mac OS X before Mavericks uses libstdc++ by default but does not support
 	# c++11. Force it to use libc++.
 	if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=c++11")
 	endif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
       endif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     else (COMPILER_HAS_CXX11_FLAG)
