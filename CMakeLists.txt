@@ -158,6 +158,11 @@ else (CERES_FOUND)
 endif (CERES_FOUND)
 
 # OpenImageIO
+option(USE_OPENIMAGEIO " Use openimageio " ON)
+
+if (USE_OPENIMAGEIO)
+add_definitions(-DUSE_OPENIMAGEIO)
+
 message("-- Check for OpenImageIO")
 find_package(OpenImageIO REQUIRED)
 if (OPENIMAGEIO_FOUND)
@@ -166,6 +171,8 @@ else (OPENIMAGEIO_FOUND)
   message(FATAL_ERROR "Can't find OpenImageIO. Please set OPENIMAGEIO_INCLUDE_DIR & "
     "OPENIMAGEIO_LIBRARY")
 endif (OPENIMAGEIO_FOUND)
+endif(USE_OPENIMAGEIO)
+
 
 # Suitesparse
 find_package(SuiteSparse REQUIRED)
@@ -242,7 +249,10 @@ include(OptimizeTheiaCompilerFlags)
 optimizetheiacompilerflags()
 
 add_subdirectory(src/theia)
+option(BUILD_APPLICATIONS "Build apps" OFF)
+if (BUILD_APPLICATIONS)
 add_subdirectory(applications)
+endif(BUILD_APPLICATIONS)
 
 if (BUILD_DOCUMENTATION)
   message("-- Documentation building is enabled")

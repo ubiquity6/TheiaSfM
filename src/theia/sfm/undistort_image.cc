@@ -152,6 +152,7 @@ void RemoveImageLensDistortion(const Camera& distorted_camera,
                                const FloatImage& distorted_image,
                                const Camera& undistorted_camera,
                                FloatImage* undistorted_image) {
+#ifdef USE_OPENIMAGEIO
   const CameraIntrinsicsModel& distorted_intrinsics =
       *distorted_camera.CameraIntrinsics();
   const CameraIntrinsicsModel& undistorted_intrinsics =
@@ -183,6 +184,9 @@ void RemoveImageLensDistortion(const Camera& distorted_camera,
           distorted_pixel.x(), distorted_pixel.y(), c);
     }
   }
+#else
+  throw std::runtime_error("must have oiio");
+#endif
 }
 
 }  // namespace

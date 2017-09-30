@@ -36,7 +36,11 @@
 #define THEIA_IMAGE_IMAGE_H_
 
 #include <Eigen/Core>
+
+#ifdef USE_OPENIMAGEIO
 #include <OpenImageIO/imagebuf.h>
+#endif
+
 #include <string>
 
 namespace theia {
@@ -64,7 +68,9 @@ class FloatImage {
 
   // Copy function. This is a deep copy of the image.
   FloatImage(const FloatImage& image_to_copy);
+#ifdef USE_OPENIMAGEIO
   explicit FloatImage(const OpenImageIO::ImageBuf& image);
+#endif
   FloatImage& operator=(const FloatImage& image2);
   ~FloatImage() {}
 
@@ -74,8 +80,10 @@ class FloatImage {
   // wrapper for all algorithms. Getting a reference to the ImageBuf provides
   // efficient access to the image data so that the image processing algorithms
   // or other manipulations may be executed on the pixels.
+#ifdef USE_OPENIMAGEIO
   OpenImageIO::ImageBuf& GetOpenImageIOImageBuf();
   const OpenImageIO::ImageBuf& GetOpenImageIOImageBuf() const;
+#endif
 
   // Image information
   int Rows() const;
@@ -172,7 +180,9 @@ class FloatImage {
   void Resize(double scale);
 
  protected:
+#ifdef USE_OPENIMAGEIO
   OpenImageIO::ImageBuf image_;
+#endif
 };
 }  // namespace theia
 

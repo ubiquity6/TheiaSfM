@@ -125,6 +125,7 @@ void ExifReader::LoadSensorWidthDatabase() {
 bool ExifReader::ExtractEXIFMetadata(
     const std::string& image_file,
     CameraIntrinsicsPrior* camera_intrinsics_prior) const {
+#ifdef USE_OPENIMAGEIO
   CHECK_NOTNULL(camera_intrinsics_prior);
 
   OpenImageIO::ImageBuf image(image_file);
@@ -202,8 +203,13 @@ bool ExifReader::ExtractEXIFMetadata(
   }
 
   return true;
+#else
+  throw std::runtime_error("Can't use w/o oiio");
+  return false;
+#endif
 }
 
+#ifdef USE_OPENIMAGEIO
 bool ExifReader::SetFocalLengthFromExif(
     const OpenImageIO::ImageSpec& image_spec,
     CameraIntrinsicsPrior* camera_intrinsics_prior) const {
@@ -295,5 +301,6 @@ bool ExifReader::SetFocalLengthFromSensorDatabase(
   camera_intrinsics_prior->focal_length.value[0] = focal_length;
   return IsValidFocalLength(focal_length);
 }
+#endif
 
 }  // namespace theia

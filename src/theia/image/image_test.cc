@@ -88,6 +88,7 @@ float Interpolate(const FloatImage& image,
 }  // namespace
 
 // Test that inputting the old fashioned way is the same as through our class.
+#ifdef USE_OPENIMAGEIO
 TEST(Image, RGBInput) {
   OpenImageIO::ImageBuf oiio_img(img_filename.c_str());
   oiio_img.read();
@@ -222,5 +223,6 @@ TEST(Image, ResizeUninitialized) {
   EXPECT_EQ(theia_img2.Height(), kHeight);
   EXPECT_EQ(theia_img2.Channels(), 3);
 }
+#endif
 
 }  // namespace theia

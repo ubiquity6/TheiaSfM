@@ -34,8 +34,11 @@
 
 #include "theia/image/image.h"
 
+#ifdef USE_OPENIMAGEIO
 #include <OpenImageIO/imagebuf.h>
 #include <OpenImageIO/imagebufalgo.h>
+#endif
+
 #include <glog/logging.h>
 #include <Eigen/Core>
 
@@ -49,6 +52,8 @@
 #include "theia/util/util.h"
 
 namespace theia {
+
+#ifdef USE_OPENIMAGEIO
 
 FloatImage::FloatImage() : FloatImage(0, 0, 1) {}
 
@@ -358,5 +363,172 @@ void FloatImage::Resize(double scale) {
   Resize(static_cast<int>(scale * Width()), static_cast<int>(scale * Height()),
          Channels());
 }
+
+#else
+
+
+FloatImage::FloatImage() : FloatImage(0, 0, 1) {}
+
+#define OIIOFAIL throw std::runtime_error("Can't use without openimageio");
+
+// Read from file.
+FloatImage::FloatImage(const std::string& filename) { Read(filename); }
+
+FloatImage::FloatImage(const FloatImage& image_to_copy) {
+  OIIOFAIL;
+}
+
+FloatImage::FloatImage(const int width, const int height, const int channels) {
+  OIIOFAIL;
+}
+
+FloatImage::FloatImage(const int width, const int height, const int channels,
+                       float* buffer)
+{
+  OIIOFAIL;
+}
+
+FloatImage& FloatImage::operator=(const FloatImage& image2) {
+  OIIOFAIL;
+}
+
+int FloatImage::Rows() const { OIIOFAIL; return 0; }
+
+int FloatImage::Cols() const { OIIOFAIL; return 0; }
+
+int FloatImage::Width() const { OIIOFAIL; return 0; }
+
+int FloatImage::Height() const { OIIOFAIL; return 0; }
+
+int FloatImage::Channels() const { OIIOFAIL; return 0; }
+
+void FloatImage::SetXY(const int x, const int y, const int c,
+                       const float value) {
+  OIIOFAIL;
+}
+
+void FloatImage::SetXY(const int x, const int y, const Eigen::Vector3f& rgb) {
+  OIIOFAIL;
+}
+
+float FloatImage::GetXY(const int x, const int y, const int c) const {
+  OIIOFAIL; return 1;
+}
+
+Eigen::Vector3f FloatImage::GetXY(const int x, const int y) const {
+  OIIOFAIL;
+  Eigen::Vector3f rgb;
+  return rgb;
+}
+
+void FloatImage::SetRowCol(const int row, const int col, const int channel,
+                           const float value) {
+  OIIOFAIL;
+}
+
+void FloatImage::SetRowCol(const int row, const int col,
+                           const Eigen::Vector3f& rgb) {
+  OIIOFAIL;
+}
+
+float FloatImage::GetRowCol(const int row, const int col,
+                            const int channel) const {
+  OIIOFAIL; return 1;
+}
+
+Eigen::Vector3f FloatImage::GetRowCol(const int row, const int col) const {
+  OIIOFAIL; return Eigen::Vector3f();
+}
+
+float FloatImage::BilinearInterpolate(const double x, const double y,
+                                      const int c) const {
+  OIIOFAIL; return 1;
+}
+
+Eigen::Vector3f FloatImage::BilinearInterpolate(const double x,
+                                                const double y) const {
+  OIIOFAIL; return Eigen::Vector3f();
+}
+
+void FloatImage::ConvertToGrayscaleImage() {
+  OIIOFAIL;
+}
+
+void FloatImage::ConvertToRGBImage() {
+  OIIOFAIL;
+}
+
+FloatImage FloatImage::AsGrayscaleImage() const {
+  FloatImage gray_image(*this);
+  return gray_image;
+}
+
+FloatImage FloatImage::AsRGBImage() const {
+  FloatImage rgb_image(*this);
+  return rgb_image;
+}
+
+void FloatImage::ScalePixels(float scale) {
+  OIIOFAIL;
+}
+
+void FloatImage::Read(const std::string& filename) {
+  OIIOFAIL;
+}
+
+void FloatImage::Write(const std::string& filename) const {
+  OIIOFAIL;
+}
+
+float* FloatImage::Data() {
+  OIIOFAIL; return NULL;
+}
+const float* FloatImage::Data() const {
+  OIIOFAIL; return NULL;
+}
+
+FloatImage FloatImage::ComputeGradientX() const {
+  OIIOFAIL; return *this;
+}
+
+FloatImage FloatImage::ComputeGradientY() const {
+  OIIOFAIL; return *this;
+}
+
+FloatImage FloatImage::ComputeGradient() const {
+  OIIOFAIL; return *this;
+}
+
+void FloatImage::ApproximateGaussianBlur(const int kernel_size) {
+  OIIOFAIL;
+}
+
+void FloatImage::MedianFilter(const int patch_width) {
+  OIIOFAIL;
+}
+
+void FloatImage::Integrate(FloatImage* integral) const {
+  OIIOFAIL;
+}
+
+void FloatImage::Resize(int new_width, int new_height, int num_channels) {
+  OIIOFAIL;
+}
+
+void FloatImage::Resize(int new_width, int new_height) {
+  OIIOFAIL;
+}
+
+void FloatImage::ResizeRowsCols(int new_rows, int new_cols) {
+  OIIOFAIL;
+}
+
+void FloatImage::Resize(double scale) {
+  OIIOFAIL;
+}
+
+#endif
+
+
 
 }  // namespace theia
