@@ -908,13 +908,12 @@ void AKAZE::Get_MSURF_Descriptor_64(const AKAZEKeypoint& kpt,
         res4 = 0.0;
   int x1 = 0, y1 = 0, x2 = 0, y2 = 0, sample_step = 0, pattern_size = 0;
   int kx = 0, ky = 0, i = 0, j = 0, dcount = 0;
-  int scale = 0, dsize = 0, level = 0;
+  int scale = 0, level = 0;
 
   // Subregion centers for the 4x4 gaussian weighting
   float cx = -0.5, cy = 0.5;
 
   // Set the descriptor size and the sample and pattern sizes
-  dsize = 64;
   sample_step = 5;
   pattern_size = 12;
 
