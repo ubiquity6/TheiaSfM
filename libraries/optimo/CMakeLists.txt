@@ -83,7 +83,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     # Linux
     if (CMAKE_SYSTEM_NAME MATCHES "Linux")
       if (NOT GCC_VERSION VERSION_LESS 4.2)
-        set (OPTIMO_CXX_FLAGS "${OPTIMO_CXX_FLAGS} -march=native -mtune=native -msse2 -msse3 -msse4")
+        ######### UBQ CHANGES
+        #set (OPTIMO_CXX_FLAGS "${OPTIMO_CXX_FLAGS} -march=native -mtune=native -msse2 -msse3 -msse4")
       endif (NOT GCC_VERSION VERSION_LESS 4.2)
     endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
     # Mac OS X

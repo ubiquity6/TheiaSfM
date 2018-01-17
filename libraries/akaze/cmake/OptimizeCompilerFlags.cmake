@@ -63,7 +63,8 @@ macro(OptimizeCompilerFlags)
       # Linux
       if (CMAKE_SYSTEM_NAME MATCHES "Linux")
         if (NOT GCC_VERSION VERSION_LESS 4.2)
-          set (AKAZE_CXX_FLAGS "${AKAZE_CXX_FLAGS} -march=native -mtune=native")
+          ########## UBQ CHANGES
+          #set (AKAZE_CXX_FLAGS "${AKAZE_CXX_FLAGS} -march=native -mtune=native")
         endif (NOT GCC_VERSION VERSION_LESS 4.2)
       endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
       # Mac OS X
